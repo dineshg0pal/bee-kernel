@@ -1,5 +1,7 @@
 [build]
-target = "x86_64-bee.json"
+target = "x86_64-unknown-none"
 
-[target.'cfg(all())']
-rustflags = ["-C", "link-arg=-Tlinker.ld"]
+[target.x86_64-unknown-none]
+rustflags = [
+    "-C", "link-arg=src/c/multiboot_header.o"
+]

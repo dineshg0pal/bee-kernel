@@ -1,32 +1,25 @@
-ENTRY(_start)
+ENTRY(rust_main)
 
 SECTIONS
 {
-    . = 1M;
-
-    .multiboot :
-    {
-        *(.multiboot)
+    /* Place multiboot header at the very beginning */
+    . = 0x100000;
+    .multiboot : {
+        KEEP(*(.multiboot))
     }
 
-    .text :
-    {
+    .text : {
         *(.text*)
     }
 
-    .rodata :
-    {
+    .rodata : {
         *(.rodata*)
     }
 
-    .data :
-    {
-        *(.data*)
+    .bss : {
+        *(.bss*)
+        *(COMMON)
     }
 
-    .bss :
-    {
-        *(COMMON)
-        *(.bss*)
-    }
+    /DISCARD/ : { *(.eh_frame) }
 }
